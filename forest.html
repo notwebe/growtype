@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GrowType — Forest Garden &amp; Settings</title>
+    <link rel="stylesheet" href="/src/forest/forest.css" />
+  </head>
+  <body>
+    <div class="forest-app">
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 16 16" width="22" height="22" shape-rendering="crispEdges">
+              <rect x="4" y="11" width="8" height="4" fill="#b56548" />
+              <rect x="3" y="10" width="10" height="2" fill="#d47a57" />
+              <rect x="7" y="6" width="2" height="4" fill="#6b4b3e" />
+              <rect x="4" y="3" width="8" height="4" fill="#52b788" />
+              <rect x="5" y="2" width="6" height="2" fill="#74c69d" />
+            </svg>
+          </div>
+          <div class="brand-copy">
+            <h1>GrowType</h1>
+            <p>Nocturnal Forest Garden &amp; Desktop Widget</p>
+          </div>
+        </div>
+        <div class="header-badges">
+          <span id="header-paused-badge" class="status-pill is-warning" hidden>Paused</span>
+          <span id="header-ghost-badge" class="status-pill is-ghost" hidden>Ghost Mode</span>
+          <span id="header-species-badge" class="status-pill">Emerald Oak</span>
+        </div>
+      </header>
+
+      <main class="forest-layout">
+        <section class="top-grid">
+          <!-- Active Tree Hero Card -->
+          <article class="panel hero-card" aria-labelledby="hero-heading">
+            <div class="panel-header">
+              <h2 id="hero-heading">Active Tree</h2>
+              <span id="hero-stage-badge" class="stage-badge">Seed</span>
+            </div>
+
+            <div class="hero-body">
+              <div class="hero-canvas-frame">
+                <canvas
+                  id="hero-tree-canvas"
+                  class="hero-tree-canvas"
+                  aria-label="Animated preview of active growing tree"
+                ></canvas>
+              </div>
+
+              <div class="hero-details">
+                <div class="hero-title-group">
+                  <div class="species-title-row">
+                    <span id="hero-species-dot" class="species-dot" aria-hidden="true"></span>
+                    <h3 id="hero-species-name">Emerald Oak</h3>
+                  </div>
+                  <p id="hero-species-subtitle" class="species-subtitle">
+                    Sturdy canopy, golden acorns &amp; songbird
+                  </p>
+                </div>
+
+                <div class="progress-block">
+                  <div class="progress-meta">
+                    <span id="hero-progress-count" class="progress-count">0 / 1,500 keys</span>
+                    <span id="hero-progress-pct" class="progress-pct">0%</span>
+                  </div>
+                  <div class="pixel-progress-track">
+                    <div id="hero-progress-fill" class="pixel-progress-fill"></div>
+                  </div>
+                </div>
+
+                <div class="hero-actions">
+                  <button id="test-keys-btn" class="pixel-btn is-secondary" type="button">
+                    Test +50 Keys
+                  </button>
+                  <button
+                    id="harvest-tree-btn"
+                    class="pixel-btn is-harvest"
+                    type="button"
+                    disabled
+                  >
+                    Harvest to Forest
+                  </button>
+                </div>
+
+                <div class="stats-strip" aria-label="Typing statistics">
+                  <div class="stat-tile">
+                    <span class="stat-label">Today's Keys</span>
+                    <strong id="stat-today" class="stat-value">0</strong>
+                  </div>
+                  <div class="stat-tile">
+                    <span class="stat-label">Lifetime Keys</span>
+                    <strong id="stat-lifetime" class="stat-value">0</strong>
+                  </div>
+                  <div class="stat-tile">
+                    <span class="stat-label">Trees Grown</span>
+                    <strong id="stat-trees" class="stat-value">0</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Widget Settings Card -->
+          <article class="panel settings-card" aria-labelledby="settings-heading">
+            <div class="panel-header">
+              <h2 id="settings-heading">Widget Settings</h2>
+              <span id="settings-feedback" class="settings-feedback" aria-live="polite"></span>
+            </div>
+
+            <div class="settings-groups">
+              <div class="setting-block">
+                <span class="setting-label">Growth Pace</span>
+                <div id="pace-control" class="segmented-control" role="group" aria-label="Growth Pace">
+                  <button type="button" class="seg-btn" data-pace="300">
+                    <span>Quick</span>
+                    <small>300</small>
+                  </button>
+                  <button type="button" class="seg-btn" data-pace="1500">
+                    <span>Standard</span>
+                    <small>1,500</small>
+                  </button>
+                  <button type="button" class="seg-btn" data-pace="5000">
+                    <span>Deep</span>
+                    <small>5,000</small>
+                  </button>
+                </div>
+              </div>
+
+              <div class="setting-block">
+                <span class="setting-label">Widget Size</span>
+                <div id="scale-control" class="segmented-control" role="group" aria-label="Widget Size">
+                  <button type="button" class="seg-btn" data-scale="2">
+                    <span>Small</span>
+                    <small>2×</small>
+                  </button>
+                  <button type="button" class="seg-btn" data-scale="3">
+                    <span>Medium</span>
+                    <small>3×</small>
+                  </button>
+                  <button type="button" class="seg-btn" data-scale="4">
+                    <span>Large</span>
+                    <small>4×</small>
+                  </button>
+                </div>
+              </div>
+
+              <div class="toggles-list">
+                <label class="toggle-row" for="toggle-always-on-top">
+                  <span class="toggle-copy">
+                    <span class="toggle-title">Always on Top</span>
+                    <span class="toggle-hint">Keep tree above other desktop windows</span>
+                  </span>
+                  <input id="toggle-always-on-top" class="pixel-toggle" type="checkbox" />
+                </label>
+
+                <label class="toggle-row" for="toggle-click-through">
+                  <span class="toggle-copy">
+                    <span class="toggle-title">Click-Through (Ghost Mode)</span>
+                    <span class="toggle-hint">Pass all clicks through tree &amp; hide HUD</span>
+                  </span>
+                  <input id="toggle-click-through" class="pixel-toggle" type="checkbox" />
+                </label>
+
+                <label class="toggle-row" for="toggle-paused">
+                  <span class="toggle-copy">
+                    <span class="toggle-title">Pause Typing Growth</span>
+                    <span class="toggle-hint">Temporarily stop counting keystrokes</span>
+                  </span>
+                  <input id="toggle-paused" class="pixel-toggle" type="checkbox" />
+                </label>
+
+                <label class="toggle-row" for="toggle-launch-login">
+                  <span class="toggle-copy">
+                    <span class="toggle-title">Launch on Windows Startup</span>
+                    <span class="toggle-hint">Start GrowType when you sign in</span>
+                  </span>
+                  <input id="toggle-launch-login" class="pixel-toggle" type="checkbox" />
+                </label>
+              </div>
+
+              <div class="settings-footer">
+                <span id="save-status-text" class="save-status-text">Auto-save active</span>
+                <div class="settings-footer-actions">
+                  <button id="save-now-btn" class="pixel-btn is-secondary" type="button">
+                    Save Now
+                  </button>
+                  <button id="open-save-folder-btn" class="pixel-btn is-secondary" type="button">
+                    Save Folder
+                  </button>
+                  <button id="reset-position-btn" class="pixel-btn is-secondary" type="button">
+                    Reset Position
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- My Pixel Forest Meadow -->
+        <section class="panel meadow-card" aria-labelledby="meadow-heading">
+          <div class="panel-header meadow-header">
+            <div class="meadow-title-wrap">
+              <h2 id="meadow-heading">My Pixel Forest Meadow</h2>
+              <span id="meadow-count-badge" class="meadow-count">0 trees</span>
+            </div>
+            <div id="meadow-inspector" class="meadow-inspector" aria-live="polite">
+              Hover or click a tree to inspect
+            </div>
+          </div>
+
+          <div id="meadow-viewport" class="meadow-viewport"></div>
+        </section>
+
+        <!-- Species Picker Grid -->
+        <section class="panel species-card" aria-labelledby="species-heading">
+          <div class="panel-header">
+            <h2 id="species-heading">Species Picker</h2>
+            <span id="species-helper" class="species-helper">
+              Choose the next tree species for your desk
+            </span>
+          </div>
+
+          <div id="species-confirm-bar" class="confirm-bar" hidden>
+            <p id="species-confirm-text" class="confirm-text"></p>
+            <div class="confirm-actions">
+              <button id="species-confirm-yes" class="pixel-btn is-warning" type="button">
+                Plant New Tree
+              </button>
+              <button id="species-confirm-no" class="pixel-btn is-secondary" type="button">
+                Keep Current
+              </button>
+            </div>
+          </div>
+
+          <div id="species-grid" class="species-grid" role="list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/forest/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "growtype",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/electron/main.js",
+  "scripts": {
+    "build:hook": "node scripts/build-hook.mjs",
+    "build:icon": "node scripts/generate-icon.mjs",
+    "build:launcher": "node scripts/build-launcher.mjs",
+    "install:shortcuts": "node scripts/install-shortcuts.mjs",
+    "build:electron": "node ./node_modules/typescript/bin/tsc -p tsconfig.electron.json",
+    "build:renderer": "node ./node_modules/vite/bin/vite.js build",
+    "build": "npm run build:hook && npm run build:icon && npm run build:launcher && npm run build:electron && npm run build:renderer",
+    "dev": "node scripts/dev.mjs",
+    "start": "npm run build && node ./node_modules/electron/cli.js .",
+    "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/typescript/bin/tsc -p tsconfig.electron.json --noEmit",
+    "test": "node ./node_modules/vitest/vitest.mjs run"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "electron": "^45.4.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  }
+}

@@ -1,0 +1,298 @@
+:root {
+  --hud-bg: rgba(17, 22, 28, 0.9);
+  --hud-border: #304154;
+  --hud-highlight: rgba(255, 255, 255, 0.08);
+  --hud-text: #eef3f7;
+  --hud-muted: #9eb2c7;
+  --hud-gold: #f3b653;
+  --hud-gold-glow: rgba(243, 182, 83, 0.35);
+  --species-accent: #52b788;
+}
+
+html,
+body {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: 'Cascadia Mono', 'Consolas', 'Courier New', monospace;
+}
+
+body.is-dragging,
+body.is-dragging * {
+  cursor: grabbing !important;
+}
+
+.widget-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 4px;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.tree-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.tree-canvas {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: auto;
+  cursor: default;
+}
+
+.widget-root.can-drag-tree .tree-canvas {
+  cursor: grab;
+}
+
+.milestone-toast {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 10;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #fff6dc;
+  background: rgba(17, 22, 28, 0.94);
+  border: 1px solid var(--hud-gold);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 2px 0 rgba(0, 0, 0, 0.65);
+  transition: opacity 180ms ease-out, transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.milestone-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.hud-pill {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translate(-50%, 5px);
+  width: max-content;
+  min-width: 176px;
+  max-width: calc(100vw - 8px);
+  box-sizing: border-box;
+  padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: var(--hud-bg);
+  border: 1px solid var(--hud-border);
+  box-shadow:
+    inset 0 1px 0 var(--hud-highlight),
+    0 3px 0 rgba(0, 0, 0, 0.55);
+  color: var(--hud-text);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
+  z-index: 20;
+}
+
+.widget-root.is-hovered:not(.is-ghost) .hud-pill {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.widget-root.is-mature .hud-pill {
+  border-color: var(--hud-gold);
+  box-shadow:
+    inset 0 1px 0 rgba(243, 182, 83, 0.22),
+    0 0 10px var(--hud-gold-glow),
+    0 3px 0 rgba(0, 0, 0, 0.6);
+}
+
+.hud-top {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  height: 18px;
+}
+
+.hud-species-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  background: var(--species-accent);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7);
+}
+
+.hud-stage {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--hud-text);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hud-paused {
+  flex-shrink: 0;
+  padding: 1px 4px;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffd584;
+  background: rgba(243, 182, 83, 0.16);
+  border: 1px solid rgba(243, 182, 83, 0.45);
+}
+
+.hud-count {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--hud-muted);
+}
+
+.hud-forest-btn {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #1d2835;
+  border: 1px solid #394d63;
+  color: var(--hud-text);
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: background-color 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+
+.hud-forest-btn:hover {
+  background: #273749;
+  border-color: var(--species-accent);
+}
+
+.hud-forest-btn:active {
+  transform: translateY(1px);
+}
+
+.hud-progress-track {
+  width: 100%;
+  height: 4px;
+  background: #0d1217;
+  border: 1px solid #253342;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.hud-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--species-accent);
+  transition: width 120ms steps(24, end), background-color 180ms ease;
+}
+
+.widget-root.is-mature .hud-progress-fill {
+  background: var(--hud-gold);
+}
+
+.hud-mature-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  height: 18px;
+}
+
+.hud-mature-row[hidden],
+.hud-paused[hidden] {
+  display: none;
+}
+
+.hud-harvest-btn {
+  flex: 1;
+  min-width: 0;
+  height: 18px;
+  padding: 0 7px;
+  font-family: inherit;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #1a1306;
+  background: linear-gradient(180deg, #ffd479 0%, #f3b653 100%);
+  border: 1px solid #ffe6a8;
+  box-shadow:
+    0 0 8px rgba(243, 182, 83, 0.45),
+    inset 0 -1px 0 rgba(163, 98, 12, 0.55);
+  cursor: pointer;
+  white-space: nowrap;
+  animation: harvestPulse 1.8s ease-in-out infinite;
+}
+
+.hud-harvest-btn:hover {
+  filter: brightness(1.08);
+}
+
+.hud-harvest-btn:active {
+  transform: translateY(1px);
+}
+
+@keyframes harvestPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 6px rgba(243, 182, 83, 0.35),
+      inset 0 -1px 0 rgba(163, 98, 12, 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 12px rgba(255, 212, 121, 0.72),
+      inset 0 -1px 0 rgba(163, 98, 12, 0.55);
+  }
+}
+
+.hud-species-dots {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.hud-species-choice {
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border: 1px solid rgba(10, 14, 18, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: transform 90ms ease, outline-color 90ms ease;
+}
+
+.hud-species-choice:hover {
+  transform: scale(1.18);
+  outline: 1px solid #eef3f7;
+}
+
+.hud-species-choice.is-next {
+  outline: 1px solid #f3b653;
+}

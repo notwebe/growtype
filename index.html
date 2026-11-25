@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GrowType</title>
+    <link rel="stylesheet" href="/src/widget/widget.css" />
+  </head>
+  <body>
+    <div id="widget-root" class="widget-root">
+      <div id="tree-stage" class="tree-stage">
+        <div id="milestone-toast" class="milestone-toast" role="status" aria-live="polite"></div>
+        <canvas id="tree-canvas" class="tree-canvas" aria-label="Growing pixel-art tree"></canvas>
+      </div>
+
+      <div id="hud-pill" class="hud-pill" aria-label="Tree progress controls">
+        <div class="hud-top">
+          <span id="hud-species-dot" class="hud-species-dot" aria-hidden="true"></span>
+          <span id="hud-stage" class="hud-stage">Seed</span>
+          <span id="hud-paused" class="hud-paused" hidden>PAUSED</span>
+          <span id="hud-count" class="hud-count">0 / 1,500</span>
+          <button
+            id="hud-forest-btn"
+            class="hud-forest-btn"
+            type="button"
+            title="Open Forest Garden & Settings"
+            aria-label="Open Forest Garden & Settings"
+          >
+            <svg viewBox="0 0 16 16" width="12" height="12" shape-rendering="crispEdges" aria-hidden="true">
+              <rect x="7" y="10" width="2" height="4" fill="#a8764c" />
+              <rect x="5" y="6" width="6" height="4" fill="#52b788" />
+              <rect x="6" y="4" width="4" height="2" fill="#74c69d" />
+              <rect x="2" y="8" width="3" height="3" fill="#40916c" />
+              <rect x="3" y="11" width="1" height="3" fill="#8c5e3c" />
+              <rect x="11" y="7" width="3" height="4" fill="#40916c" />
+              <rect x="12" y="11" width="1" height="3" fill="#8c5e3c" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="hud-progress-track" aria-hidden="true">
+          <div id="hud-progress-fill" class="hud-progress-fill"></div>
+        </div>
+
+        <div id="hud-mature-row" class="hud-mature-row" hidden>
+          <button id="hud-harvest-btn" class="hud-harvest-btn" type="button">
+            ★ Harvest!
+          </button>
+          <div id="hud-species-dots" class="hud-species-dots" role="group" aria-label="Harvest and plant species"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/widget/main.ts"></script>
+  </body>
+</html>
