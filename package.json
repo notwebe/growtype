@@ -1,6 +1,7 @@
 {
   "name": "growtype",
   "version": "0.1.0",
+  "description": "A cozy Windows desktop widget where every keystroke grows a procedural pixel-art tree.",
   "private": true,
   "main": "dist/electron/main.js",
   "scripts": {
